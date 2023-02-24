@@ -9,11 +9,12 @@ const Bedroom = require('../models/Bedroom.js');
 module.exports = (app) => {
     app.post('/register',AuthController.register);
     app.post('/login',AuthController.login);
+    app.put('/logout',verifyToken,AuthController.logout);
     app.post('/createBedroom',BedroomController.createBedroom);
     app.get('/getBedrooms',BedroomController.getBedrooms);
     app.get('/infoBedroom',BedroomController.infoBedroom);
-    app.post('/bookBedroom',ReservationController.bookBedroom);
-    app.post('/modifyBooking',ReservationController.modifyBooking);
+    app.post('/bookBedroom',verifyToken,ReservationController.bookBedroom);
+    app.put('/modifyBooking',ReservationController.modifyBooking);
     app.delete('/deleteBooking',ReservationController.deleteBooking);
     app.get('/bedroomBooked',ReservationController.getBedroomsBooked);
     app.get('/infoBooking',ReservationController.getInfoBooking);

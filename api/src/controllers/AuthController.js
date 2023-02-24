@@ -51,8 +51,8 @@ module.exports = {
                 const user = await User.create({
                     email: email,
                     password: password,
-                    firstname: firstname,
-                    lastname: lastname
+                    first_name: firstname,
+                    last_name: lastname
                 })
                 if(user){
                     const token = jwtSignUser(user.toJSON());
@@ -82,7 +82,6 @@ module.exports = {
     },
     async login(req,res){
         try{
-            const token = global.token;
             const {email,password} = req.body;
             const user = await User.findOne({
                 where: {
@@ -103,7 +102,7 @@ module.exports = {
                     }
                     else{
                         const userJson = user.toJSON();
-                        const token = jswtSignUser(userJson);
+                        const token = jwtSignUser(userJson);
                         global.token = token;
 
                         res.status(200).send({
@@ -116,14 +115,14 @@ module.exports = {
         }
         catch(err){
             res.status(500).send({
-                message: "Une erreur interne est survenue. Veuillez réessayer."
+                message: "Une erreur interne est survenue. Veuillez réessayer." 
             })
         }
     },
     
     async logout(req,res){
         try{
-            const token = global.token;
+            const token = req.user.token
             const user = await User.findOne({
                 where: {
                     token: token
@@ -152,7 +151,7 @@ module.exports = {
         }
         catch(err){
             res.status(500).send({
-                message: "Une erreur interne est survenue. Veuillez réessayer"
+                message: "Une erreur interne est survenue. Veuillez réessayer " + err
             })
         }
     }

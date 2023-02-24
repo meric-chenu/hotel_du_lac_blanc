@@ -3,7 +3,7 @@ module.exports = (sequelize,DataTypes) => {
         id_reservation: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoincrement: true
+            autoIncrement: true
         },
         arrivee: {
             type: DataTypes.DATE,
@@ -23,6 +23,15 @@ module.exports = (sequelize,DataTypes) => {
         child_number: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: false
+        },
+        id_booked: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: false
+        },
+        email: {
+            type: DataTypes.STRING(250),
             unique: false
         }
     })

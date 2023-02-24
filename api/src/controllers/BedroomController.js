@@ -23,6 +23,7 @@ module.exports = {
                 }).then(() => {
                     res.status(200).send({
                         message: "La chambre a été créée"
+
                     })
                 })
             }

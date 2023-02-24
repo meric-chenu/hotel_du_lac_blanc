@@ -1,3 +1,4 @@
+const {User} = require("../models")
 module.exports = {
     async deleteUser(req,res){
         try{
