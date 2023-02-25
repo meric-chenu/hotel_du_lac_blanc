@@ -1,4 +1,4 @@
-const {Bedroom} = require("../models")
+const {Bedroom,Booked,Reservation} = require("../models")
 module.exports = {
     async createBedroom(req,res){
         const {title,capacity,air_conditioned,wifi,television,fridge,dishes,phone,drink,begin_price,max_capacity} = req.body;
@@ -46,15 +46,39 @@ module.exports = {
             const bedrooms = await Bedroom.findAll({
                 raw: true
             });
-            if(bedrooms){
+            if(bedrooms.length > 0){
+                list_bedrooms = []
+                list_busy = []
+                let booked;
+                let reservation;
+                //We fetch for the period booked for the bedroom
+                for(let index = 0;index<bedrooms.length;index+=1){
+                    let busy = []
+                    //Search for all reservation for the bedroom
+                    booked = await Booked.findAll({
+                        where: {
+                            id_bedroom: bedrooms[index].id_bedroom
+                        },
+                        raw:true
+                    })
+                    if(booked.length > 0){
+                        
+                        for(let i = 0;i<booked.length;i+=1){
+                            busy.push(booked[i])
+                        }                        
+                    }
+                    list_busy.push(busy);
+                    list_bedrooms.push(bedrooms[index]);
+                }
                 res.status(200).send({
                     message: "Retour des chambes",
-                    bedrooms: bedrooms
+                    bedrooms: list_bedrooms,
+                    busy: list_busy
                 })
             }
             else{
-                res.status(500).send({
-                    message: "Une erreur interne est survenue. Veuillez réessayer"
+                res.status(404).send({
+                    message: "Impossible de trouver de chambre disponible"
                 })
             }
 

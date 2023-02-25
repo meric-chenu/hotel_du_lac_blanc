@@ -199,6 +199,7 @@ module.exports = {
                 if(reservation){
                     const reservationJson = reservation.toJSON();
                     if(reservationJson.email === user.toJSON().email){
+                        
                         reservation.update({
                             arrivee: arrivee,
                             depart: depart,
