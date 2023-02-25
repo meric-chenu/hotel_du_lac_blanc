@@ -14,8 +14,9 @@ module.exports = (app) => {
     app.get('/getBedrooms',BedroomController.getBedrooms);
     app.get('/infoBedroom',BedroomController.infoBedroom);
     app.post('/bookBedroom',verifyToken,ReservationController.bookBedroom);
-    app.put('/modifyBooking',ReservationController.modifyBooking);
-    app.delete('/deleteBooking',ReservationController.deleteBooking);
-    app.get('/bedroomBooked',ReservationController.getBedroomsBooked);
-    app.get('/infoBooking',ReservationController.getInfoBooking);
+    app.put('/modifyBooking',verifyToken,ReservationController.modifyBooking);
+    app.delete('/deleteBooking',verifyToken,ReservationController.deleteBooking);
+    app.get('/bedroomBooked',verifyToken,ReservationController.getBedroomsBooked);
+    app.get('/infoBooking',verifyToken,ReservationController.getInfoBooking);
+    app.delete('/deleteUser',verifyToken,UserController.deleteUser);
 }

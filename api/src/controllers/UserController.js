@@ -2,7 +2,7 @@ const {User} = require("../models")
 module.exports = {
     async deleteUser(req,res){
         try{
-            const {token} = req.body; 
+            const token = req.user.token
             const user = await User.findOne({
                 where: {
                     token: token
@@ -11,7 +11,7 @@ module.exports = {
             if(user){
                 await User.destroy({
                     where: {
-                        id_user: userJson.id_user
+                        id_user: user.toJSON().id_user
                     }
                 }).then(() => {
                     res.status(200).send({
@@ -27,7 +27,7 @@ module.exports = {
         }
         catch(err){
             res.status(500).send({
-                message: "Une erreur interne est survenue. Veuillez réessayer"
+                message: "Une erreur interne est survenue. Veuillez réessayer " + err
             })
         }
     },

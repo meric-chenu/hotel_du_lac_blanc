@@ -1,7 +1,7 @@
 const {Bedroom} = require("../models")
 module.exports = {
     async createBedroom(req,res){
-        const {title,capacity,air_conditioned,wifi,television,fridge,dishes,phone,drink,begin_price} = req.body;
+        const {title,capacity,air_conditioned,wifi,television,fridge,dishes,phone,drink,begin_price,max_capacity} = req.body;
         try{
             const bedroom = await Bedroom.findOne({
                 where: {
@@ -19,7 +19,8 @@ module.exports = {
                     dishes: dishes,
                     phone: phone,
                     drink: drink,
-                    begin_price: begin_price
+                    begin_price: begin_price,
+                    max_capacity: max_capacity
                 }).then(() => {
                     res.status(200).send({
                         message: "La chambre a été créée"
@@ -39,6 +40,7 @@ module.exports = {
             })
         }
     },
+    //get bedrooms which are not booked
     async getBedrooms(req,res){
         try{
             const bedrooms = await Bedroom.findAll({
@@ -63,6 +65,7 @@ module.exports = {
             })
         }
     },
+    //Return information of a bedroom
     async infoBedroom(req,res){
         try{
             const {title} = req.body;

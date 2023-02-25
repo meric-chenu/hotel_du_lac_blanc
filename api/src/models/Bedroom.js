@@ -41,6 +41,11 @@ module.exports = (sequelize,DataTypes) => {
             unique: false,
             allowNull: false
         },
+        max_capacity: {
+            type: DataTypes.INTEGER,
+            unique: false,
+            allowNull: false    
+        }
 
     })
     return Bedroom;
